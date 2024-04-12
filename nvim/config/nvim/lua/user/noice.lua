@@ -3,12 +3,12 @@ local M = {
 	event = "VeryLazy",
 	dependencies = {
 		"MunifTanjim/nui.nvim",
-	}
+	},
 }
 
 function M.config()
-	local icons = require "user.icons"
-	require("noice").setup {
+	local icons = require("user.icons")
+	require("noice").setup({
 		lsp = {
 			override = {
 				["vim.lsp.util.convert_input_to_markdown_lines"] = true,
@@ -46,8 +46,7 @@ function M.config()
 			inc_rename = true,
 			lsp_doc_border = false,
 		},
-
-	}
+	})
 end
 
 return M

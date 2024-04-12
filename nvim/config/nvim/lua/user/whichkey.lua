@@ -7,24 +7,25 @@ function M.config()
 	vim.o.timeoutlen = 500
 
 	local mappings = {
-
 		h = { "<cmd>nohlsearch<CR>", "NoHL" },
 		v = { "<cmd>vsplit<CR>", "Split" },
-
 		q = {
 			name = "Quit",
-			q = { "<cmd>confirm q<cr>", "Confirm" },
-			f = { "<cmd>q!<cr>", "Force" },
+			q = { "<cmd>confirm q<cr>", "Quite" },
+			Q = { "<cmd>q!<cr>", "Force" },
 			w = { "<cmd>wq<cr>", "Write" },
 			a = { "<cmd>qa<cr>", "Save all" },
 		},
-
+		w = {
+			name = "Write",
+			w = { "<cmd>w<cr>", "Save" },
+			q = { "<cmd>wq<cr>", "Quit" },
+		},
 		p = {
 			name = "Plugins",
 			l = { "<cmd>Lazy<cr>", "Lazy" },
 			m = { "<cmd>Mason<cr>", "Mason" },
 		},
-
 		a = {
 			name = "Tab",
 			n = { "<cmd>$tabnew<cr>", "New Empty Tab" },
@@ -33,18 +34,17 @@ function M.config()
 			h = { "<cmd>-tabmove<cr>", "Move Left" },
 			l = { "<cmd>+tabmove<cr>", "Move Right" },
 		},
-
 		f = { name = "Find" },
 		b = { name = "Bookmark" },
 		g = { name = "Git" },
 		l = { name = "LSP" },
 		d = { name = "Debug" },
-
 	}
 
-	local icons = require "user.icons"
-	local which_key = require "which-key"
-	which_key.setup {
+	local icons = require("user.icons")
+	local which_key = require("which-key")
+
+	which_key.setup({
 		plugins = {
 			marks = true,
 			registers = true,
@@ -86,7 +86,7 @@ function M.config()
 			buftypes = {},
 			filetypes = { "TelescopePrompt" },
 		},
-	}
+	})
 
 	local opts = {
 		mode = "n",

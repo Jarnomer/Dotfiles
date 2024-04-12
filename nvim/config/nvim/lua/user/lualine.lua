@@ -4,6 +4,7 @@ local M = {
 
 function M.config()
 	local icons = require("user.icons")
+	-- local lspsaga_breadcrumb = require("lspsaga.symbol.winbar")
 	local harpoon = require("harpoon.mark")
 	local lazy_status = require("lazy.status")
 	local theme = require("kanagawa.colors").setup().theme
@@ -50,29 +51,24 @@ function M.config()
 	kanagawa.normal = {
 		a = { bg = theme.syn.fun, fg = theme.ui.bg_m3, gui = "bold" },
 		b = { bg = theme.diff.change, fg = theme.syn.fun },
-		c = { bg = theme.ui.bg_p1, fg = theme.ui.fg },
+		c = { bg = theme.ui.bg_m3, fg = theme.ui.fg },
 	}
-
 	kanagawa.insert = {
 		a = { bg = theme.diag.ok, fg = theme.ui.bg, gui = "bold" },
 		b = { bg = theme.ui.bg, fg = theme.diag.ok },
 	}
-
 	kanagawa.command = {
 		a = { bg = theme.syn.operator, fg = theme.ui.bg, gui = "bold" },
 		b = { bg = theme.ui.bg, fg = theme.syn.operator },
 	}
-
 	kanagawa.visual = {
 		a = { bg = theme.syn.keyword, fg = theme.ui.bg, gui = "bold" },
 		b = { bg = theme.ui.bg, fg = theme.syn.keyword },
 	}
-
 	kanagawa.replace = {
 		a = { bg = theme.syn.constant, fg = theme.ui.bg },
 		b = { bg = theme.ui.bg, fg = theme.syn.constant },
 	}
-
 	kanagawa.inactive = {
 		a = { bg = theme.ui.bg_m3, fg = theme.ui.fg_dim },
 		b = { bg = theme.ui.bg_m3, fg = theme.ui.fg_dim, gui = "bold" },
@@ -85,19 +81,44 @@ function M.config()
 		end
 	end
 
+	local empty = require("lualine.component"):extend()
+	function empty:draw(default_highlight)
+		self.status = ""
+		self.applied_separator = ""
+		self:apply_highlights(default_highlight)
+		self:apply_section_separators()
+		return self.status
+	end
+
+	local function process_sections(sections)
+		for name, section in pairs(sections) do
+			local left = name:sub(9, 10) < "x"
+			for pos = 1, name ~= "lualine_z" and #section or #section - 1 do
+				table.insert(section, pos * 2, { empty, color = { fg = theme.ui.fg, bg = theme.ui.bg } })
+			end
+			for id, comp in ipairs(section) do
+				if type(comp) ~= "table" then
+					comp = { comp }
+					section[id] = comp
+				end
+				comp.separator = left and { right = "" } or { left = "" }
+			end
+		end
+		return sections
+	end
+
 	require("lualine").setup({
 		options = {
-			-- theme = "auto",
 			theme = kanagawa,
 			icons_enabled = true,
 			section_separators = {
-				left = icons.ui.BoldDividerRight,
-				right = icons.ui.BoldDividerLeft,
+				left = "",
+				right = "",
 			},
 			component_separators = { left = "", right = "" },
 			ignore_focus = { "NvimTree" },
 		},
-		sections = {
+		sections = process_sections({
 			lualine_a = {
 				{
 					"mode",
@@ -118,6 +139,7 @@ function M.config()
 				},
 			},
 			lualine_c = {
+				-- { "filetype", colored = false, icon_only = true },
 				{
 					"filename",
 					path = 0,
@@ -128,6 +150,7 @@ function M.config()
 						newfile = icons.ui.NewFile,
 					},
 				},
+				-- lspsaga_breadcrumb.get_bar,
 			},
 			lualine_x = {
 				{
@@ -149,11 +172,10 @@ function M.config()
 					update_in_insert = false,
 					always_visible = false,
 				},
-				{ "filetype", colored = false, icon_only = true },
 				harpoon_component,
 			},
 			lualine_z = { "location" },
-		},
+		}),
 		extensions = { "quickfix", "man", "fugitive" },
 	})
 end

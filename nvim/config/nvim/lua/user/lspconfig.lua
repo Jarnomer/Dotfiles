@@ -5,6 +5,7 @@ local M = {
 		"folke/neodev.nvim",
 		"williamboman/mason.nvim",
 		"williamboman/mason-lspconfig.nvim",
+		'cacharle/c_formatter_42.vim',
 	},
 }
 
@@ -52,9 +53,10 @@ function M.config()
 	local wk = require "which-key"
 	wk.register {
 		["<leader>lr"] = { "<cmd>lua vim.lsp.buf.rename()<cr>", "Rename" },
-		["<leader>lf"] = { "<cmd>lua vim.lsp.buf.format({async = true})<cr>", "Format", },
-		["<leader>lc"] = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Action" },
+		["<leader>lf"] = { "<cmd>CFormatter42<cr>", "Format", },
+		-- ["<leader>lf"] = { "<cmd>lua vim.lsp.buf.format({async = true})<cr>", "Format", },
 		["<leader>lq"] = { "<cmd>lua vim.diagnostic.setloclist()<cr>", "Quickfix" },
+		["<leader>lc"] = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Action" },
 		["<leader>lj"] = { "<cmd>lua vim.diagnostic.goto_next()<cr>", "Next" },
 		["<leader>lk"] = { "<cmd>lua vim.diagnostic.goto_prev()<cr>", "Prev" },
 		["<leader>lh"] = { require('user.lspconfig').toggle_inlay_hints, "Hints" },

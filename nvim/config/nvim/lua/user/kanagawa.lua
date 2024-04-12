@@ -6,10 +6,9 @@ local M = {
 function M.config()
 	require("kanagawa").setup({
 		terminalColors = true,
-		commentStyle = {},
-		functionStyle = { bold = true },
-		keywordStyle = { italic = true },
-		statementStyle = {},
+		commentStyle = { italic = false },
+		keywordStyle = { italic = false },
+		statementStyle = { bold = false },
 		transparent = false,
 		colors = {
 			palette = {

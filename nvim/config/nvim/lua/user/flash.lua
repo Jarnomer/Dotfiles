@@ -4,9 +4,16 @@ local M = {
 }
 
 function M.config()
-	require('flash').setup {
-
-	}
+	local wk = require("which-key")
+	wk.register({
+		["<leader>j"] = {
+			function()
+				require("flash").jump()
+			end,
+			"Jump",
+		},
+	})
+	require("flash").setup({})
 end
 
 return M

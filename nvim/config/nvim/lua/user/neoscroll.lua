@@ -12,7 +12,8 @@ function M.config()
 ]]
 
 	require("neoscroll").setup {
-		mappings = { "<C-u>", "<C-d>", "<C-b>", "<C-f>", "<C-y>", "<C-e>", "zt", "zz", "zb", "C-k", "C-j" },
+		mappings = { "<C-u>", "<C-d>", "<C-b>", "<C-f>", "<C-y>", "<C-e>", "zt", "zz", "zb", "C-k", "C-j",
+			"C-Down", "C-Up", "S-Down", "S-Up", "C-S-Down", "C-S-Up"},
 		hide_cursor = true,
 		stop_eof = true,
 		respect_scrolloff = false,
@@ -36,6 +37,12 @@ function M.config()
 	t["zz"] = { "zz", { "250" } }
 	t["zb"] = { "zb", { "250" } }
 
+	-- t["<S-Up>"] = { "scroll", { "-vim.wo.scroll", "true", "10" } }
+	-- t["<S-Down>"] = { "scroll", { "vim.wo.scroll", "true", "10" } }
+	t["<C-Up>"] = { "scroll", { "-vim.wo.scroll", "true", "200" } }
+	t["<C-Down>"] = { "scroll", { "vim.wo.scroll", "true", "200" } }
+	t["<C-S-Up>"] = { "scroll", { "-vim.api.nvim_win_get_height(0)", "true", "300" } }
+	t["<C-S-Down>"] = { "scroll", { "vim.api.nvim_win_get_height(0)", "true", "300" } }
 	require("neoscroll.config").set_mappings(t)
 end
 

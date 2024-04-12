@@ -4,6 +4,6 @@ local M = {
 
 function M.config()
 	require("mini.cursorword").setup()
-	require("mini.animate").setup()
+	-- require("mini.animate").setup()
 end
 return M
