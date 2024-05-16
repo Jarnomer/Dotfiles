@@ -4,27 +4,26 @@ local M = {
 
 function M.config()
 	local icons = require("user.icons")
-	-- local lspsaga_breadcrumb = require("lspsaga.symbol.winbar")
-	local harpoon = require("harpoon.mark")
 	local lazy_status = require("lazy.status")
 	local theme = require("kanagawa.colors").setup().theme
 
-	local function harpoon_component()
-		local total_marks = harpoon.get_length()
-
-		if total_marks == 0 then
-			return ""
-		end
-
-		local current_mark = ""
-
-		local mark_idx = harpoon.get_current_index()
-		if mark_idx ~= nil then
-			current_mark = tostring(mark_idx)
-		end
-
-		return string.format(" %s/%d", current_mark, total_marks)
-	end
+	-- local harpoon = require("harpoon.mark")
+	-- local function harpoon_component()
+	-- 	local total_marks = harpoon.get_length()
+	--
+	-- 	if total_marks == 0 then
+	-- 		return ""
+	-- 	end
+	--
+	-- 	local current_mark = ""
+	--
+	-- 	local mark_idx = harpoon.get_current_index()
+	-- 	if mark_idx ~= nil then
+	-- 		current_mark = tostring(mark_idx)
+	-- 	end
+	--
+	-- 	return string.format(" %s/%d", current_mark, total_marks)
+	-- end
 
 	local mode_map = {
 		["NORMAL"] = "N",
@@ -45,9 +44,7 @@ function M.config()
 		["CONFIRM"] = "Y?",
 		["MORE"] = "M",
 	}
-
 	local kanagawa = {}
-
 	kanagawa.normal = {
 		a = { bg = theme.syn.fun, fg = theme.ui.bg_m3, gui = "bold" },
 		b = { bg = theme.diff.change, fg = theme.syn.fun },
@@ -150,7 +147,6 @@ function M.config()
 						newfile = icons.ui.NewFile,
 					},
 				},
-				-- lspsaga_breadcrumb.get_bar,
 			},
 			lualine_x = {
 				{
@@ -172,7 +168,7 @@ function M.config()
 					update_in_insert = false,
 					always_visible = false,
 				},
-				harpoon_component,
+				-- harpoon_component,
 			},
 			lualine_z = { "location" },
 		}),

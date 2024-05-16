@@ -1,6 +1,6 @@
 local M = {
 	"ThePrimeagen/harpoon",
-	-- branch = "harpoon2",
+	branch = "harpoon2",
 	event = "VeryLazy",
 	dependencies = {
 		{ "nvim-lua/plenary.nvim" },
@@ -9,17 +9,83 @@ local M = {
 
 function M.config()
 	local wk = require("which-key")
-	wk.register({
-		["<leader>bb"] = { "<cmd>lua require('harpoon.ui').toggle_quick_menu()<CR>.", "Bookmarks" },
-		["<leader>ba"] = { "<cmd>lua require('harpoon.mark').add_file()<CR>", "Add" },
-		["<leader>bn"] = { "<cmd>lua require('harpoon.ui').nav_next()<CR>", "Next" },
-		["<leader>bp"] = { "<cmd>lua require('harpoon.ui').nav_prev()<CR>", "Prev" },
-		["<leader>b1"] = { "<cmd>lua require('harpoon.ui').nav_file(1)<CR>", "1st" },
+	local harpoon = require("harpoon")
+
+	harpoon:setup({})
+
+	harpoon:extend({
+		UI_CREATE = function(cx)
+			vim.keymap.set("n", "<C-v>", function()
+				harpoon.ui:select_menu_item({ vsplit = true })
+			end, { buffer = cx.bufnr })
+
+			vim.keymap.set("n", "<C-x>", function()
+				harpoon.ui:select_menu_item({ split = true })
+			end, { buffer = cx.bufnr })
+
+			vim.keymap.set("n", "<C-t>", function()
+				harpoon.ui:select_menu_item({ tabedit = true })
+			end, { buffer = cx.bufnr })
+		end,
 	})
-	-- function M.mark_file()
-	-- 	require("harpoon.mark").add_file()
-	-- 	vim.notify("  bookmark added")
-	-- end
+
+	-- harpoon:extend(extensions.builtins.navigate_with_number())
+
+	local conf = require("telescope.config").values
+	local function toggle_telescope(harpoon_files)
+		local file_paths = {}
+		for _, item in ipairs(harpoon_files.items) do
+			table.insert(file_paths, item.value)
+		end
+
+		require("telescope.pickers")
+			.new({}, {
+				prompt_title = "Harpoon",
+				finder = require("telescope.finders").new_table({
+					results = file_paths,
+				}),
+				previewer = conf.file_previewer({}),
+				sorter = conf.generic_sorter({}),
+			})
+			:find()
+	end
+
+	vim.keymap.set("n", "<C-e>", function()
+		toggle_telescope(harpoon:list())
+	end, { desc = "Open harpoon window" })
+
+	wk.register({
+		["<leader>ha"] = {
+			function()
+				harpoon:list():add()
+			end,
+			"Add",
+		},
+		["<leader>ht"] = {
+			function()
+				harpoon.ui:toggle_quick_menu(harpoon:list())
+			end,
+			"Toggle",
+		},
+		["<leader>hn"] = {
+			function()
+				harpoon:list():next()
+			end,
+			"Next",
+		},
+		["<leader>hp"] = {
+			function()
+				harpoon:list():prev()
+			end,
+			"Prev",
+		},
+		["<leader>h1"] = {
+			function()
+				harpoon:list():select(1)
+			end,
+			"1",
+		},
+	})
 end
 
 return M

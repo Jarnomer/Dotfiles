@@ -9,14 +9,14 @@ local M = {
 		{
 			"nvim-telescope/telescope-fzf-native.nvim",
 			build = "make",
-			lazy = true
+			lazy = true,
 		},
 	},
 }
 
 function M.config()
-	local wk = require "which-key"
-	wk.register {
+	local wk = require("which-key")
+	wk.register({
 		["<leader>ff"] = { "<cmd>Telescope find_files<cr>", "Files" },
 		["<leader>fg"] = { "<cmd>Telescope live_grep<cr>", "Text" },
 		["<leader>fb"] = { "<cmd>Telescope buffers<cr>", "Buffers" },
@@ -34,12 +34,12 @@ function M.config()
 
 		["<leader>gb"] = { "<cmd>Telescope git_branches<cr>", "Branch" },
 		["<leader>gs"] = { "<cmd>Telescope git_status<cr>", "Status" },
-	}
+	})
 
-	local icons = require "user.icons"
-	local actions = require "telescope.actions"
+	local icons = require("user.icons")
+	local actions = require("telescope.actions")
 
-	require("telescope").setup {
+	require("telescope").setup({
 		defaults = {
 			color_devicons = true,
 			prompt_prefix = icons.ui.Search .. " ",
@@ -127,8 +127,8 @@ function M.config()
 			},
 		},
 		extensions = {
-			['ui-select'] = {
-				require('telescope.themes').get_dropdown(),
+			["ui-select"] = {
+				require("telescope.themes").get_dropdown(),
 			},
 			fzf = {
 				fuzzy = true,
@@ -143,8 +143,8 @@ function M.config()
 		require("telescope").load_extension("fzf"),
 		require("telescope").load_extension("ui-select"),
 		require("telescope").load_extension("undo"),
-		require('telescope').load_extension("neoclip")
-	}
+		require("telescope").load_extension("neoclip"),
+	})
 end
 
 return M

@@ -5,22 +5,7 @@ local M = {
 function M.config()
 	vim.o.timeout = true
 	vim.o.timeoutlen = 500
-
 	local mappings = {
-		h = { "<cmd>nohlsearch<CR>", "NoHL" },
-		v = { "<cmd>vsplit<CR>", "Split" },
-		q = {
-			name = "Quit",
-			q = { "<cmd>confirm q<cr>", "Quite" },
-			Q = { "<cmd>q!<cr>", "Force" },
-			w = { "<cmd>wq<cr>", "Write" },
-			a = { "<cmd>qa<cr>", "Save all" },
-		},
-		w = {
-			name = "Write",
-			w = { "<cmd>w<cr>", "Save" },
-			q = { "<cmd>wq<cr>", "Quit" },
-		},
 		p = {
 			name = "Plugins",
 			l = { "<cmd>Lazy<cr>", "Lazy" },
@@ -28,22 +13,28 @@ function M.config()
 		},
 		a = {
 			name = "Tab",
-			n = { "<cmd>$tabnew<cr>", "New Empty Tab" },
-			N = { "<cmd>tabnew %<cr>", "New Tab" },
+			n = { "<cmd>$tabnew<cr>", "New" },
+			N = { "<cmd>tabnew %<cr>", "Dup" },
+			x = { "<cmd>tabclose<cr>", "Close" },
+			j = { "<cmd>tabp<cr>", "Prev" },
+			k = { "<cmd>tabn<cr>", "Next" },
+			h = { "<cmd>-tabmove<cr>", "Left" },
+			l = { "<cmd>+tabmove<cr>", "Right" },
 			o = { "<cmd>tabonly<cr>", "Only" },
-			h = { "<cmd>-tabmove<cr>", "Move Left" },
-			l = { "<cmd>+tabmove<cr>", "Move Right" },
 		},
+		v = { "<cmd>vsplit<cr>", "Split" },
+		w = { "<cmd>w<cr>", "Write" },
+		q = { "<cmd>q<cr>", "Quit" },
+		x = { "<cmd>wq<cr>", "Exit" },
 		f = { name = "Find" },
-		b = { name = "Bookmark" },
+		h = { name = "Harpoon" },
+		s = { name = "Spectre" },
 		g = { name = "Git" },
-		l = { name = "LSP" },
+		l = { name = "Lsp" },
 		d = { name = "Debug" },
 	}
-
 	local icons = require("user.icons")
 	local which_key = require("which-key")
-
 	which_key.setup({
 		plugins = {
 			marks = true,
@@ -87,12 +78,10 @@ function M.config()
 			filetypes = { "TelescopePrompt" },
 		},
 	})
-
 	local opts = {
 		mode = "n",
 		prefix = "<leader>",
 	}
-
 	which_key.register(mappings, opts)
 end
 

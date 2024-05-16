@@ -43,4 +43,4 @@ vim.g.netrw_banner = 0
 vim.g.netrw_mouse = 2
 vim.g.have_nerd_font = true
 vim.opt.list = true
-vim.opt.listchars = { tab = '󰌒 ', trail = '󱁐', nbsp = '␣' }
+vim.opt.listchars = { tab = "󰌒 ", trail = "󱁐", nbsp = "␣" }

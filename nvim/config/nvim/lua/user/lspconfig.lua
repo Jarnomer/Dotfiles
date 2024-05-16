@@ -5,7 +5,6 @@ local M = {
 		"folke/neodev.nvim",
 		"williamboman/mason.nvim",
 		"williamboman/mason-lspconfig.nvim",
-		'cacharle/c_formatter_42.vim',
 	},
 }
 
@@ -22,16 +21,16 @@ end
 
 M.on_attach = function(client, bufnr)
 	lsp_keymaps(bufnr)
-	if client.supports_method "textDocument/inlayHint" then
+	if client.supports_method("textDocument/inlayHint") then
 		vim.lsp.inlay_hint.enable(bufnr, true)
 	end
 	if client and client.server_capabilities.documentHighlightProvider then
-		vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
+		vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
 			buffer = event.buf,
 			callback = vim.lsp.buf.document_highlight,
 		})
 
-		vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
+		vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
 			buffer = event.buf,
 			callback = vim.lsp.buf.clear_references,
 		})
@@ -50,22 +49,21 @@ M.toggle_inlay_hints = function()
 end
 
 function M.config()
-	local wk = require "which-key"
-	wk.register {
+	local wk = require("which-key")
+	wk.register({
 		["<leader>lr"] = { "<cmd>lua vim.lsp.buf.rename()<cr>", "Rename" },
-		["<leader>lf"] = { "<cmd>CFormatter42<cr>", "Format", },
-		-- ["<leader>lf"] = { "<cmd>lua vim.lsp.buf.format({async = true})<cr>", "Format", },
+		["<leader>lf"] = { "<cmd>lua vim.lsp.buf.format({async = true})<cr>", "Format" },
 		["<leader>lq"] = { "<cmd>lua vim.diagnostic.setloclist()<cr>", "Quickfix" },
 		["<leader>lc"] = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Action" },
 		["<leader>lj"] = { "<cmd>lua vim.diagnostic.goto_next()<cr>", "Next" },
 		["<leader>lk"] = { "<cmd>lua vim.diagnostic.goto_prev()<cr>", "Prev" },
-		["<leader>lh"] = { require('user.lspconfig').toggle_inlay_hints, "Hints" },
-		["<leader>ld"] = { require('telescope.builtin').lsp_definitions, "Definitions" },
-		["<leader>le"] = { require('telescope.builtin').lsp_references, "References" },
-		["<leader>li"] = { require('telescope.builtin').lsp_implementations, "Implementations" },
-		["<leader>lt"] = { require('telescope.builtin').lsp_type_definitions, "TypeDefs" },
-		["<leader>ls"] = { require('telescope.builtin').lsp_document_symbols, "Symbols" },
-	}
+		["<leader>lh"] = { require("user.lspconfig").toggle_inlay_hints, "Hints" },
+		["<leader>ld"] = { require("telescope.builtin").lsp_definitions, "Definitions" },
+		["<leader>le"] = { require("telescope.builtin").lsp_references, "References" },
+		["<leader>li"] = { require("telescope.builtin").lsp_implementations, "Implementations" },
+		["<leader>lt"] = { require("telescope.builtin").lsp_type_definitions, "TypeDefs" },
+		["<leader>ls"] = { require("telescope.builtin").lsp_document_symbols, "Symbols" },
+	})
 
 	local servers = {
 		"lua_ls",
@@ -75,17 +73,17 @@ function M.config()
 		"rust_analyzer",
 	}
 
-	local lspconfig = require "lspconfig"
-	local icons = require "user.icons"
+	local lspconfig = require("lspconfig")
+	local icons = require("user.icons")
 
 	local default_diagnostic_config = {
 		signs = {
 			active = true,
 			values = {
 				{ name = "DiagnosticSignError", text = icons.diagnostics.Error },
-				{ name = "DiagnosticSignWarn",  text = icons.diagnostics.Warning },
-				{ name = "DiagnosticSignHint",  text = icons.diagnostics.Hint },
-				{ name = "DiagnosticSignInfo",  text = icons.diagnostics.Information },
+				{ name = "DiagnosticSignWarn", text = icons.diagnostics.Warning },
+				{ name = "DiagnosticSignHint", text = icons.diagnostics.Hint },
+				{ name = "DiagnosticSignInfo", text = icons.diagnostics.Information },
 			},
 		},
 		virtual_text = false,
