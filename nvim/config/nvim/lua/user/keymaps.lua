@@ -15,6 +15,7 @@ keymap("n", "{", "{zz")
 keymap("n", "}", "}zz")
 keymap("n", "J", "mzJ`z")
 
+-- Need to figure out what these do
 keymap("x", "p", [["_dP]])
 keymap("v", "p", '"_dPUp')
 keymap("n", "<leader>y", '"+y', opts)
@@ -49,14 +50,18 @@ keymap("n", "<D-M-Down>", ":horizontal resize +5<CR>", opts)
 keymap("n", "<D-M-Up>", ":horizontal resize -5<CR>", opts)
 keymap("n", "<D-M-Left>", ":vertical resize +10<CR>", opts)
 
--- Alt + Arrows (All) | Start/End of line/document (All Modes)
+-- Crtl + Shift + Up/Down (All) | Skip to next empty line {}
+keymap({ "n", "o", "x" }, "<C-S-Up>", "{", opts)
+keymap({ "n", "o", "x" }, "<C-S-Down>", "}", opts)
+
+-- Alt + Arrows (All) | Start/End of line/Document (All Modes)
 keymap({ "n", "o", "x" }, "<M-Right>", "g_", opts)
 keymap({ "n", "o", "x" }, "<M-Down>", "G", opts)
 keymap({ "n", "o", "x" }, "<M-Up>", "gg", opts)
 keymap({ "n", "o", "x" }, "<M-Left>", "^", opts)
 
--- Shift / Crtl + Arrows (All) | Normal w(W)/b(B) commands (All Modes)
-keymap({ "n", "o", "x" }, "<S-Right>", "w", opts)
-keymap({ "n", "o", "x" }, "<C-Right>", "W", opts)
-keymap({ "n", "o", "x" }, "<S-Left>", "b", opts)
-keymap({ "n", "o", "x" }, "<C-Left>", "B", opts)
+-- Shift (+) Crtl + Arrows (All) | Normal w(W)/b(B) commands (All Modes)
+keymap({ "n", "o", "x" }, "<C-Right>", "w", opts)
+keymap({ "n", "o", "x" }, "<S-Right>", "W", opts)
+keymap({ "n", "o", "x" }, "<C-Left>", "b", opts)
+keymap({ "n", "o", "x" }, "<S-Left>", "B", opts)
