@@ -1,0 +1,6 @@
+-I
+/run/media/jankku/Verbergen/dev/42/cubed/incs/
+-I
+/run/media/jankku/Verbergen/dev/42/cubed/libft/incs
+-I
+/run/media/jankku/Verbergen/dev/42/cubed/mlx/include/MLX42
