@@ -25,7 +25,6 @@ function M.config()
 
 	local function dap_clear_breakpoints()
 		dap.clear_breakpoints()
-		require("notify")("Breakpoints cleared", "warn")
 	end
 
 	local wk = require("which-key")
@@ -35,7 +34,7 @@ function M.config()
 		["<leader>de"] = { "<cmd>DapTerminate<cr>", "End" },
 		["<leader>di"] = { "<cmd>DapStepInto<cr>", "Step in" },
 		["<leader>do"] = { "<cmd>DapStepOut<cr>", "Step out" },
-		["<leader>dv"] = { "<cmd>DapStepOver<cr>", "Step over" },
+		["<leader>dO"] = { "<cmd>DapStepOver<cr>", "Step over" },
 		["<leader>dC"] = { dap_clear_breakpoints, "Clear" },
 	})
 	require("mason-nvim-dap").setup({
